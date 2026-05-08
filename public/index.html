@@ -595,8 +595,111 @@
     /* ukryj grain effect na mobile (mniej szumu wizualnego) */
     .grain::after { opacity: 0.3 !important; }
 
-    /* tweaks panel — schowaj na mobile */
-    .twk-host, [class*="tweaks"], div[style*="tweaks"] { display: none !important; }
+    /* tweaks panel — schowaj na mobile (twk-* prefix z tweaks-panel.jsx) */
+    .twk-panel, .twk-hd, .twk-body, [class*="twk-"] { display: none !important; }
+
+    /* ---- slajd 01 cover A (foto-bleed) ---- */
+    .cover-A .text {
+      position: static !important; padding: 0 !important;
+      margin-top: 0 !important;
+    }
+    .cover-A h1 { font-size: 48px !important; line-height: 0.92 !important; }
+    .cover-A .lede {
+      display: flex !important; flex-direction: column !important;
+      align-items: flex-start !important; gap: 14px !important; margin-top: 18px !important;
+    }
+    .cover-A .lede p { font-size: 14px !important; max-width: 100% !important; }
+    .cover-A .meta { text-align: left !important; font-size: 11px !important; }
+    .cover-A .meta b { font-size: 18px !important; margin-top: 4px !important; }
+
+    /* ---- slajd 01 cover B (typo-poster) ---- */
+    .cover-B .frame { inset: 24px !important; padding: 24px !important; }
+    .cover-B .megatype { font-size: 80px !important; line-height: 0.85 !important; }
+    .cover-B .row {
+      flex-direction: column !important; align-items: flex-start !important;
+      gap: 14px !important;
+    }
+    .cover-B .row .left { font-size: 11px !important; }
+    .cover-B .row .right { font-size: 22px !important; text-align: left !important; }
+
+    /* ---- slajd 01 cover C (split deck) ---- */
+    .cover-C .split {
+      grid-template-columns: 1fr !important; grid-template-rows: 1fr 1fr !important;
+    }
+    .cover-C .pane.dark { padding: 28px !important; }
+    .cover-C h1 { font-size: 38px !important; line-height: 0.95 !important; }
+    .cover-C .meta { font-size: 11px !important; margin-top: 18px !important; }
+    .cover-C .photo-cap { font-size: 10px !important; left: 16px; right: 16px; bottom: 16px !important; gap: 8px; }
+
+    /* ---- slajd 09 budżet (figura 220px → mobile) ---- */
+    .budget { gap: 18px !important; }
+    .budget .ask {
+      padding: 24px 22px !important; gap: 14px !important;
+    }
+    .budget .ask::before { display: none !important; }
+    .budget .ask .figure { font-size: 76px !important; line-height: 1 !important; }
+    .budget .ask .figure em { font-size: 26px !important; margin-left: 4px !important; }
+    .budget .ask .what { font-size: 24px !important; line-height: 1.05 !important; }
+    .budget .ask .desc { font-size: 14px !important; max-width: 100% !important; }
+    .budget .ask > div[style*="space-between"] {
+      flex-direction: column !important; align-items: flex-start !important; gap: 10px !important;
+    }
+    .budget .breakdown { gap: 10px !important; }
+    .budget .row {
+      grid-template-columns: 1fr !important;
+      padding: 10px 0 !important; gap: 4px !important;
+    }
+    .budget .row .label { font-size: 12px !important; }
+    .budget .row .label b { font-size: 15px !important; }
+    .budget .row .v { font-size: 18px !important; }
+
+    /* ---- slajd 12 kontakt ---- */
+    .contact-stage {
+      grid-template-columns: 1fr !important; gap: 14px !important;
+    }
+    .contact-stage > div[style*="grid-template-rows"] {
+      display: flex !important; flex-direction: column !important; gap: 12px !important;
+    }
+    .contact-stage > div > div[style*="grid-template-columns"] {
+      display: flex !important; flex-direction: column !important; gap: 12px !important;
+    }
+    .contact-card { padding: 18px 22px !important; gap: 8px !important; }
+    .contact-card .nm { font-size: 22px !important; }
+    .contact-card .role { font-size: 11px !important; }
+    .contact-card .info { font-size: 12px !important; line-height: 1.55 !important; }
+    .cta-block { padding: 24px 22px !important; gap: 16px !important; }
+    .cta-block > div[style*="space-between"] {
+      flex-direction: column !important; align-items: flex-start !important; gap: 12px !important;
+    }
+    .cta-block .hashtag { font-size: 14px !important; }
+
+    /* ---- slajd 06/07 — karty artystów / sceny ---- */
+    .stage-card { padding: 18px 22px !important; }
+    .stage-card .num-tag { font-size: 80px !important; opacity: 0.4 !important; right: 12px !important; bottom: -10px !important; }
+    .stage-card h3 { font-size: 26px !important; line-height: 0.95 !important; }
+    .stage-card .desc { font-size: 13px !important; }
+    .stage-card .row-mini { flex-direction: column !important; gap: 8px !important; margin-top: 6px !important; }
+    .stage-card .meta { font-size: 11px !important; }
+
+    /* ---- slajd 11 wpływ — featured KPI nie powinien dominować ---- */
+    .impact-card.featured { padding: 18px 20px !important; }
+    .impact-card.featured .num { font-size: 56px !important; }
+
+    /* ---- intro p (po stronie tytułu, side text) ---- */
+    .slide-pad p[style*="max-width"] { max-width: 100% !important; font-size: 13px !important; }
+
+    /* ---- chrome bot — pokaż ale schowaj jeden z 2 tagów żeby nie zachodzić ---- */
+    .chrome .bot { display: flex !important; }
+    .chrome .bot .tag { font-size: 9px !important; }
+
+    /* ---- corner pieczątki na slajdzie 03 (ICC TLK REGIO) ---- */
+    .map-stage > div[style*="position:absolute"][style*="bottom"][style*="right"] {
+      position: static !important;
+      flex-wrap: wrap !important;
+      justify-content: flex-start !important;
+      margin-top: 14px !important;
+      gap: 8px !important;
+    }
   }
 </style>
 </head>
@@ -804,33 +907,8 @@
     <h2 class="kicker">Dwa etapy.<br/><em>Jedna ściana.</em></h2>
     <div class="rule"></div>
 
-    <div class="timeline" style="margin-top: 24px;">
-      <div class="timeline-head">
-        <div><b>10</b>Śr</div><div><b>11</b>Cz</div><div><b>12</b>Pt</div><div><b>13</b>So</div>
-        <div><b>14</b>Nd</div><div><b>15</b>Pn</div><div><b>16</b>Wt</div><div><b>17</b>Śr</div>
-        <div><b>18</b>Cz</div><div><b>19</b>Pt</div><div><b>20</b>So</div><div><b>21</b>Nd</div>
-      </div>
-      <div class="timeline-body" style="min-height: 380px;">
-        <!-- przygotowania (11-12 czerwca) -->
-        <div class="track" style="left: 12px; width: calc(100%/12 * 2 - 24px); top: 30px; height: 76px; background: transparent; border: 2px dashed var(--muted); color: var(--muted);">
-          <div class="name" style="font-size: 20px;">Logistyka · grunt · materiały</div>
-          <div class="sub">10 — 11 czerwca</div>
-        </div>
-        <!-- Etap I: 12-19, kolumny 3-10 -->
-        <div class="track t1" style="left: calc(100%/12 * 2 + 12px); width: calc(100%/12 * 7 - 24px); top: 30px; height: 76px;">
-          <div class="name">ETAP I — LOKOMOTYWA TUWIMA</div>
-          <div class="sub">15 artystów · dyrekcja Raku3D · spójna paleta · zakwaterowanie + wynagrodzenie</div>
-        </div>
-        <!-- Etap II: 19-21, kolumny 10-12 -->
-        <div class="track t2" style="left: calc(100%/12 * 9 + 12px); width: calc(100%/12 * 3 - 24px); top: 130px; height: 92px;">
-          <div class="name">ETAP II — TRAIN2WIN GRAFFITI JAM</div>
-          <div class="sub">+25 artystów · warsztaty Wyszło Jak Wyszło · DJ.Jus · DJ Wuber · otwarcie ściany</div>
-        </div>
-        <!-- documentation: pełna szerokość timeline (10-21), wsunięta w body -->
-        <div class="track" style="left: 12px; right: 12px; width: auto; top: 250px; height: 48px; background: transparent; border-top: 2px solid rgba(200,255,46,0.4); border-bottom: 2px solid rgba(200,255,46,0.4); border-left: none; border-right: none; color: var(--neon); padding: 0;">
-          <div class="name" style="font-size:18px; font-family:'JetBrains Mono', monospace; letter-spacing:0.16em; text-transform:uppercase; text-align:center; line-height:1;">··· DOKUMENTACJA WIDEO · #ZbkTrain2win ···</div>
-        </div>
-      </div>
+    <div style="margin-top: 24px; flex: 1; border: 1.5px solid var(--line); background: var(--ink-2); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 380px;">
+      <img src="uploads/szkic.png" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 24px;" alt="Wizualizacja projektu"/>
     </div>
 
     <div style="display:grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr; gap: 18px; margin-top: 22px;">
