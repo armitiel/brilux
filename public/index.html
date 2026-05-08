@@ -217,9 +217,9 @@
     background: var(--ink-2);
   }
   .timeline-head { display: grid; grid-template-columns: repeat(12, 1fr); border-bottom: 1.5px solid var(--line); }
-  .timeline-head div { padding: 18px 12px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); border-right: 1px solid rgba(255,255,255,0.05); text-align: center; letter-spacing: 0.1em; }
+  .timeline-head div { padding: 8px 12px 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); border-right: 1px solid rgba(255,255,255,0.05); text-align: center; letter-spacing: 0.1em; line-height: 1.1; }
   .timeline-head div:last-child { border-right: none; }
-  .timeline-head div b { display: block; color: var(--paper); font-family: 'Archivo Black', sans-serif; font-size: 28px; letter-spacing: 0; margin-bottom: 4px; }
+  .timeline-head div b { display: inline-block; color: var(--paper); font-family: 'Archivo Black', sans-serif; font-size: 22px; letter-spacing: 0; margin-right: 6px; vertical-align: baseline; }
   .timeline-body { position: relative; }
   .track {
     position: absolute; height: 88px;
@@ -642,10 +642,35 @@
       </div>
     </div>
 
-    <div style="display:flex; gap:32px; margin-top: 28px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase;">
-      <span><span style="display:inline-block; width:14px; height:14px; background:var(--neon); margin-right:8px; vertical-align:middle;"></span>Etap I — produkcja muralu</span>
-      <span><span style="display:inline-block; width:14px; height:14px; border:2px solid var(--neon); margin-right:8px; vertical-align:middle;"></span>Etap II — Graffiti Jam + program publiczny</span>
-      <span><span style="display:inline-block; width:14px; height:14px; border:2px dashed var(--muted); margin-right:8px; vertical-align:middle;"></span>Przygotowania</span>
+    <div style="display:grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr; gap: 18px; margin-top: 22px;">
+      <div style="display:flex; align-items:center; gap:14px; border:1px solid var(--line); padding:14px 18px; background: var(--ink-2);">
+        <span style="display:inline-block; width:22px; height:22px; background:var(--neon); flex-shrink:0;"></span>
+        <div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:15px; color:var(--paper); letter-spacing:0;">ETAP I</div>
+          <div style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;">Produkcja muralu</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; border:1px solid var(--line); padding:14px 18px; background: var(--ink-2);">
+        <span style="display:inline-block; width:22px; height:22px; border:2px solid var(--neon); box-sizing:border-box; flex-shrink:0;"></span>
+        <div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:15px; color:var(--paper); letter-spacing:0;">ETAP II</div>
+          <div style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;">Graffiti Jam + program publiczny</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; border:1px solid var(--line); padding:14px 18px; background: var(--ink-2);">
+        <span style="display:inline-block; width:22px; height:22px; border:2px dashed var(--muted); box-sizing:border-box; flex-shrink:0;"></span>
+        <div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:15px; color:var(--paper); letter-spacing:0;">PRZYGOTOWANIA</div>
+          <div style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;">Logistyka, grunt, materiały</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; border:1px solid rgba(200,255,46,0.4); padding:14px 18px; background: var(--ink-2);">
+        <span style="display:inline-block; width:22px; height:6px; background: var(--neon); flex-shrink:0; opacity: 0.7;"></span>
+        <div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:15px; color:var(--neon); letter-spacing:0;">DOKUMENTACJA</div>
+          <div style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-top:2px;">Wideo · #ZbkTrain2win</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
