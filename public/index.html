@@ -544,26 +544,30 @@
           </linearGradient>
         </defs>
         <rect width="1700" height="540" fill="url(#dots)"/>
-        <!-- rail line -->
-        <path d="M 80 270 Q 380 200 720 280 T 1100 300 T 1620 250" stroke="#3a3a32" stroke-width="6" fill="none" stroke-dasharray="2 14" stroke-linecap="round"/>
+        <!-- main line: Berlin — Rzepin — Zbąszynek — Poznań (linia kolejowa nr 3) -->
+        <path d="M 80 200 Q 320 170 420 180 Q 620 190 880 200 Q 1180 210 1620 170" stroke="#3a3a32" stroke-width="6" fill="none" stroke-dasharray="2 14" stroke-linecap="round"/>
+        <!-- southern branch: Zbąszynek → Zielona Góra (linia 358) -->
+        <path d="M 880 210 Q 870 320 870 440" stroke="#3a3a32" stroke-width="6" fill="none" stroke-dasharray="2 14" stroke-linecap="round"/>
         <!-- highlighted segment near hub -->
-        <path d="M 760 290 Q 880 296 980 296" stroke="url(#rail)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 760 200 Q 870 206 980 210" stroke="url(#rail)" stroke-width="5" fill="none" stroke-linecap="round"/>
         <!-- wall band -->
-        <rect x="800" y="310" width="200" height="14" fill="#c8ff2e" opacity="0.85"/>
-        <rect x="800" y="310" width="200" height="14" fill="none" stroke="#000" stroke-width="1"/>
-        <text x="900" y="358" text-anchor="middle" fill="#c8ff2e" font-family="JetBrains Mono" font-size="14" letter-spacing="3">ŚCIANA · 450 m</text>
+        <rect x="800" y="222" width="200" height="14" fill="#c8ff2e" opacity="0.85"/>
+        <rect x="800" y="222" width="200" height="14" fill="none" stroke="#000" stroke-width="1"/>
+        <text x="900" y="270" text-anchor="middle" fill="#c8ff2e" font-family="JetBrains Mono" font-size="14" letter-spacing="3">ŚCIANA · 450 m</text>
+        <!-- branch line label -->
+        <text x="895" y="340" text-anchor="start" fill="rgba(244,241,234,0.42)" font-family="JetBrains Mono" font-size="11" letter-spacing="2">linia 358</text>
       </svg>
       <!-- pins -->
-      <div class="map-pin" style="left:5%; top:50%;"><div class="dot"></div><div class="lbl">Berlin</div></div>
-      <div class="map-pin" style="left:24%; top:42%;"><div class="dot"></div><div class="lbl">Rzepin</div></div>
-      <div class="map-pin hub" style="left:53%; top:52%;"><div class="dot"></div><div class="lbl">Zbąszynek</div></div>
-      <div class="map-pin" style="left:75%; top:55%;"><div class="dot"></div><div class="lbl">Zielona Góra</div></div>
-      <div class="map-pin" style="left:94%; top:46%;"><div class="dot"></div><div class="lbl">Poznań</div></div>
+      <div class="map-pin" style="left:5%; top:37%;"><div class="dot"></div><div class="lbl">Berlin</div></div>
+      <div class="map-pin" style="left:25%; top:33%;"><div class="dot"></div><div class="lbl">Rzepin</div></div>
+      <div class="map-pin hub" style="left:52%; top:39%;"><div class="dot"></div><div class="lbl">Zbąszynek</div></div>
+      <div class="map-pin" style="left:94%; top:31%;"><div class="dot"></div><div class="lbl">Poznań</div></div>
+      <div class="map-pin" style="left:52%; top:81%;"><div class="dot"></div><div class="lbl">Zielona Góra</div></div>
 
       <!-- corner caption -->
       <div style="position:absolute; left:32px; top:24px; max-width:340px;">
         <div class="eyebrow">Widoczność</div>
-        <p style="font-size:18px; line-height:1.5; color: rgba(244,241,234,0.78); margin: 8px 0 0;">Ściana zaczyna się przy głównym wjeździe do Zbąszynka od południa, a kończy w punkcie, przez który <b style="color:var(--neon); font-weight:500;">przejeżdżają wszystkie pociągi</b> ICC, TLK i Regio na trasie Berlin — Rzepin — Zielona Góra.</p>
+        <p style="font-size:18px; line-height:1.5; color: rgba(244,241,234,0.78); margin: 8px 0 0;">Ściana zaczyna się przy głównym wjeździe do Zbąszynka od południa, a kończy w punkcie, przez który <b style="color:var(--neon); font-weight:500;">przejeżdżają wszystkie pociągi</b> ICC, TLK i Regio na linii Berlin — Poznań — Warszawa, plus regionalne na odgałęzieniu do Zielonej Góry.</p>
       </div>
       <div style="position:absolute; right:32px; bottom:32px; display:flex; gap:14px;">
         <div class="stamp">ICC</div>
