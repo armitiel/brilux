@@ -907,8 +907,33 @@
     <h2 class="kicker">Dwa etapy.<br/><em>Jedna ściana.</em></h2>
     <div class="rule"></div>
 
-    <div style="margin-top: 24px; flex: 1; border: 1.5px solid var(--line); background: var(--ink-2); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 380px;">
-      <img src="uploads/szkic.png" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 24px;" alt="Wizualizacja projektu"/>
+    <div class="timeline" style="margin-top: 24px;">
+      <div class="timeline-head">
+        <div><b>10</b>Śr</div><div><b>11</b>Cz</div><div><b>12</b>Pt</div><div><b>13</b>So</div>
+        <div><b>14</b>Nd</div><div><b>15</b>Pn</div><div><b>16</b>Wt</div><div><b>17</b>Śr</div>
+        <div><b>18</b>Cz</div><div><b>19</b>Pt</div><div><b>20</b>So</div><div><b>21</b>Nd</div>
+      </div>
+      <div class="timeline-body" style="min-height: 520px;">
+        <!-- Etap I: 12-19, kolumny 3-10 -->
+        <div class="track t1" style="left: calc(100%/12 * 2 + 12px); width: calc(100%/12 * 7 - 24px); top: 60px;">
+          <div class="name">ETAP I — LOKOMOTYWA TUWIMA</div>
+          <div class="sub">15 artystów · dyrekcja Raku3D · spójna paleta · zakwaterowanie + wynagrodzenie</div>
+        </div>
+        <!-- Etap II: 19-21, kolumny 10-12 -->
+        <div class="track t2" style="left: calc(100%/12 * 9 + 12px); width: calc(100%/12 * 3 - 24px); top: 180px;">
+          <div class="name">ETAP II — TRAIN2WIN GRAFFITI JAM</div>
+          <div class="sub">+25 artystów · warsztaty Wyszło Jak Wyszło · DJ.Jus · DJ Wuber · otwarcie ściany</div>
+        </div>
+        <!-- przygotowania -->
+        <div class="track" style="left: 12px; width: calc(100%/12 * 2 - 24px); top: 300px; background: transparent; border: 2px dashed var(--muted); color: var(--muted);">
+          <div class="name" style="font-size: 22px;">Logistyka · grunt · materiały</div>
+          <div class="sub">10 — 11 czerwca</div>
+        </div>
+        <!-- documentation: pełna szerokość, dotted neon -->
+        <div class="track" style="left: 12px; right: 12px; width: auto; top: 420px; height: 56px; background: transparent; border-top: 2px solid rgba(200,255,46,0.4); border-bottom: 2px solid rgba(200,255,46,0.4); border-left: none; border-right: none; color: var(--neon); padding: 0;">
+          <div class="name" style="font-size:18px; font-family:'JetBrains Mono', monospace; letter-spacing:0.16em; text-transform:uppercase; text-align:center; line-height:1;">··· DOKUMENTACJA WIDEO · #ZbkTrain2win ···</div>
+        </div>
+      </div>
     </div>
 
     <div style="display:grid; grid-template-columns: 1.1fr 1.6fr 1fr 1fr; gap: 18px; margin-top: 22px;">
