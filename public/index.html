@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Train2Win — Prezentacja sponsorska</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -407,6 +408,196 @@
   /* tweaks panel host hooks */
   .twk-host {}
 
+  /* ================================================================
+     MOBILE — pionowy flow, każdy slajd jako osobna sekcja na pełną szer.
+     ================================================================ */
+  @media (max-width: 900px) {
+    html.mobile { overflow-x: hidden; }
+    body { background: #050505 !important; }
+
+    /* deck-stage staje się przezroczystym kontenerem (sekcje renderują się normalnie) */
+    deck-stage:not(:defined) { visibility: visible !important; }
+    deck-stage {
+      display: block !important; position: static !important;
+      width: 100% !important; height: auto !important;
+      background: transparent !important;
+    }
+
+    /* sekcje: vertical-flow, auto-height, full width */
+    section {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100vh;
+      max-width: 100vw;
+      padding: 56px 18px 56px !important;
+      overflow: visible !important;
+      display: flex !important; flex-direction: column;
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--line);
+      gap: 16px;
+    }
+    section:first-of-type { padding-top: 32px !important; }
+    section:last-of-type  { border-bottom: none; }
+
+    /* chrome top/bot — uproszczone (zostawiamy tylko numer slajdu góra-prawo) */
+    .chrome { padding: 18px 18px !important; position: absolute !important; inset: 0 !important; }
+    .chrome .top { align-items: center !important; gap: 12px !important; }
+    .chrome .bot { display: none !important; }
+    .chrome .tag { font-size: 10px !important; letter-spacing: 0.12em !important; gap: 8px !important; }
+    .chrome .tag .dot { width: 7px !important; height: 7px !important; }
+    .chrome .pageno { font-size: 14px !important; }
+
+    /* slide-pad wewnątrz sekcji */
+    .slide-pad {
+      height: auto !important;
+      padding: 50px 0 0 !important;
+      display: block !important;
+    }
+
+    /* typografia */
+    h2.kicker { font-size: 36px !important; line-height: 1.02 !important; letter-spacing: -0.02em !important; }
+    h2.kicker em { display: inline; }
+    .lede-big, p.lede-big { font-size: 16px !important; max-width: 100% !important; line-height: 1.5 !important; }
+    .eyebrow { font-size: 13px !important; letter-spacing: 0.16em !important; }
+    .small-mono { font-size: 11px !important; }
+    .display { line-height: 0.95 !important; }
+    .stencil { font-size: inherit !important; }
+    .rule { width: 60px !important; margin: 16px 0 !important; }
+
+    /* wszystkie 2-kolumnowe / 3-kolumnowe układy — w jedną kolumnę */
+    .two-col,
+    .benefits,
+    .impact-grid,
+    .refs,
+    .stages-grid,
+    .artists,
+    .kpi-stack {
+      display: flex !important; flex-direction: column !important;
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      width: 100% !important;
+    }
+
+    /* karty / boxy — pełna szerokość, mniejsze paddingi */
+    .kpi { padding: 14px 18px !important; gap: 14px !important; }
+    .kpi .num { font-size: 38px !important; min-width: 0 !important; }
+    .kpi .lab { font-size: 11px !important; }
+    .kpi .lab b { font-size: 14px !important; }
+    .impact-card { padding: 16px 18px !important; }
+    .impact-card .num { font-size: 38px !important; }
+    .impact-card .lab { font-size: 11px !important; }
+    .benefit { padding: 18px 20px !important; gap: 8px !important; }
+    .benefit .index { font-size: 38px !important; }
+    .benefit h3 { font-size: 18px !important; }
+    .benefit p { font-size: 13px !important; }
+    .benefit .pill { position: static !important; align-self: flex-start; margin-top: 4px; font-size: 10px !important; padding: 4px 8px !important; }
+
+    .artist-card { min-height: 0 !important; padding: 12px 14px !important; }
+    .artist-card .num { font-size: 26px !important; }
+    .artist-card .nm { font-size: 18px !important; }
+    .artist-card .role { font-size: 10px !important; }
+    .artist-card .ig { font-size: 11px !important; }
+
+    .ref-card .quote { font-size: 28px !important; }
+    .ref-card h4 { font-size: 18px !important; }
+    .ref-card p { font-size: 13px !important; }
+
+    .ticker { font-size: 11px !important; padding: 10px 14px !important; gap: 10px !important; flex-wrap: wrap; }
+
+    /* stamps / pills */
+    .stamp { font-size: 10px !important; padding: 5px 9px !important; letter-spacing: 0.14em !important; }
+
+    /* slide 01 cover — uproszczony */
+    .cover-A .bg img,
+    .cover-B .bg img,
+    .cover-C .bg img { height: 100% !important; object-fit: cover !important; }
+    .cover { height: 70vh !important; min-height: 380px; max-height: 600px; position: relative !important; }
+    .cover .head, .cover .body, .cover .foot { padding: 24px 18px !important; }
+    .cover h1 { font-size: 46px !important; line-height: 0.95 !important; }
+    .cover-C h1 { font-size: 46px !important; }
+    .cover .right { font-size: 20px !important; }
+    .cover .meta { font-size: 11px !important; gap: 10px !important; }
+
+    /* slide 03 mapa — niska wysokość, podpisy w bloku poniżej */
+    .map-stage { min-height: 220px !important; height: 240px !important; flex: none !important; margin-top: 14px !important; }
+    .map-stage svg { height: 100% !important; }
+    .map-pin .lbl { font-size: 9px !important; }
+    .map-pin .dot { width: 9px !important; height: 9px !important; }
+    .map-stage > div[style*="position:absolute"][style*="left:32px"] {
+      position: static !important; max-width: 100% !important;
+      margin-top: 14px !important; padding: 14px 16px !important;
+    }
+    .map-stage > div[style*="right:32px"] {
+      position: static !important; flex-wrap: wrap; gap: 8px !important;
+      margin-top: 12px !important; justify-content: flex-start !important;
+    }
+
+    /* slide 04 mockup — obraz pełna szerokość, scroll-x jeśli za szeroki */
+    .mockup-stage { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+    .mockup-stage img { max-width: none !important; height: 180px !important; width: auto !important; }
+    .mockup-cap { font-size: 9px !important; padding: 8px 12px !important; }
+
+    /* slide 05 timeline — kolaps do listy zdarzeń */
+    .timeline { flex: none !important; height: auto !important; }
+    .timeline-head { display: none !important; }
+    .timeline-body {
+      height: auto !important; min-height: 0 !important; position: static !important;
+      display: flex !important; flex-direction: column; gap: 10px;
+      padding: 14px !important;
+    }
+    .timeline-body .track {
+      position: static !important; height: auto !important;
+      width: 100% !important; left: auto !important; right: auto !important; top: auto !important;
+      padding: 14px 18px !important; margin: 0 !important;
+    }
+    .track .name { font-size: 18px !important; }
+    .track .sub { font-size: 11px !important; line-height: 1.45 !important; white-space: normal !important; }
+
+    /* slide 09 budżet — tabela jako lista */
+    .budget,
+    .budget .row,
+    .budget .ask {
+      display: flex !important; flex-direction: column !important;
+      grid-template-columns: 1fr !important;
+      gap: 6px !important; padding: 12px 14px !important;
+    }
+    .budget .ask .what { font-size: 26px !important; }
+    .budget .row .v { font-size: 18px !important; }
+    .budget .label b { font-size: 14px !important; }
+
+    /* slide 12 CTA */
+    .cta-block .big { font-size: 36px !important; line-height: 1 !important; }
+    .stage-card { padding: 18px !important; }
+    .stage-card h3 { font-size: 24px !important; }
+
+    /* spery / zmiany inline z desktopowych slajdów — wyzeruj */
+    [style*="padding-top: 130px"] { padding-top: 50px !important; }
+    [style*="padding-top:130px"] { padding-top: 50px !important; }
+    [style*="padding: 96px 96px 130px 96px"] { padding: 50px 0 0 !important; }
+    [style*="padding: 96px 96px 56px 96px"] { padding: 50px 0 0 !important; }
+
+    /* gdy desktop slajd ma inline display:flex justify-content:space-between (header row) */
+    .slide-pad > div[style*="justify-content:space-between"],
+    .slide-pad > div[style*="justify-content: space-between"] {
+      display: flex !important; flex-direction: column !important;
+      align-items: stretch !important; gap: 12px !important;
+    }
+    .slide-pad > div[style*="text-align:right"],
+    .slide-pad > div[style*="text-align: right"] {
+      text-align: left !important;
+    }
+
+    /* legenda slajdu 05 — pojedyncza kolumna */
+    .slide-pad > div[style*="grid-template-columns: 1.1fr"] {
+      display: flex !important; flex-direction: column !important; gap: 8px !important;
+    }
+
+    /* ukryj grain effect na mobile (mniej szumu wizualnego) */
+    .grain::after { opacity: 0.3 !important; }
+
+    /* tweaks panel — schowaj na mobile */
+    .twk-host, [class*="tweaks"], div[style*="tweaks"] { display: none !important; }
+  }
 </style>
 </head>
 <body data-cover="A">
@@ -1017,8 +1208,20 @@
   });
 </script>
 
-<script src="deck-stage.js"></script>
-<script src="image-slot.js"></script>
+<script>
+  // Mobile detection — gdy wąski viewport, oznaczamy <html> klasą mobile
+  // i NIE ładujemy deck-stage.js (żeby slajdy renderowały się jako pionowy flow,
+  // a nie przeskalowany canvas 1920×1080).
+  (function () {
+    var isMobile = window.matchMedia('(max-width: 900px)').matches;
+    if (isMobile) {
+      document.documentElement.classList.add('mobile');
+    } else {
+      var s1 = document.createElement('script'); s1.src = 'deck-stage.js'; document.body.appendChild(s1);
+      var s2 = document.createElement('script'); s2.src = 'image-slot.js'; document.body.appendChild(s2);
+    }
+  })();
+</script>
 
 <!-- TWEAKS -->
 <script>
