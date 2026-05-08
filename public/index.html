@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<title>Train2Win — Prezentacja sponsorska</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --ink-2: #161614;
+    --paper: #f4f1ea;
+    --paper-dim: #e6e2d6;
+    --line: #2a2a26;
+    --neon: #c8ff2e;        /* limonkowy spray */
+    --neon-deep: #9bd400;
+    --warn: #ff5b1f;
+    --muted: #8a8a82;
+  }
+  html, body { margin: 0; background: #050505; color: var(--paper); font-family: 'Space Grotesk', sans-serif; }
+  deck-stage { background: #050505; }
+  section {
+    width: 1920px; height: 1080px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* ---------- type ---------- */
+  .display { font-family: 'Archivo Black', sans-serif; letter-spacing: -0.02em; line-height: 0.9; }
+  .stencil { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.18em; font-size: 18px; color: var(--neon); }
+  .small-mono { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--muted); letter-spacing: 0.04em; }
+
+  /* ---------- shared chrome ---------- */
+  .chrome {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    padding: 56px 72px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    z-index: 5;
+  }
+  .chrome .top, .chrome .bot { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+  .chrome .tag { display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; }
+  .chrome .tag .dot { width: 10px; height: 10px; background: var(--neon); border-radius: 50%; box-shadow: 0 0 14px var(--neon); }
+  .chrome .pageno { font-family: 'Archivo Black', sans-serif; color: var(--paper); font-size: 22px; }
+  .chrome .pageno em { color: var(--muted); font-style: normal; font-weight: 400; }
+
+  .grain::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.3) 1px, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    background-position: 0 0, 1px 1px;
+    mix-blend-mode: overlay;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .stamp {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1.5px solid var(--neon);
+    color: var(--neon);
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    border-radius: 3px;
+  }
+  .stamp.solid { background: var(--neon); color: #000; border-color: var(--neon); }
+  .stamp.warn  { border-color: var(--warn); color: var(--warn); }
+
+  /* spray paint underline */
+  .spray {
+    background-image: linear-gradient(transparent 60%, var(--neon) 60%, var(--neon) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    padding: 0 6px;
+    color: #000;
+  }
+  .spray.outline { color: var(--neon); background: none; -webkit-text-stroke: 2px var(--neon); }
+
+  /* ---------- cover layouts ---------- */
+  .cover {
+    position: absolute; inset: 0;
+  }
+  /* layout A — wall photo bleed */
+  .cover-A .bg {
+    position: absolute; inset: 0;
+    background: #000;
+  }
+  .cover-A .bg img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
+    filter: contrast(1.15) saturate(0.6) brightness(0.7);
+  }
+  .cover-A .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.85) 95%);
+  }
+  .cover-A .text {
+    position: absolute; left: 96px; right: 96px; bottom: 140px;
+    z-index: 3;
+  }
+  .cover-A h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 220px;
+    line-height: 0.86;
+    margin: 0;
+    letter-spacing: -0.035em;
+  }
+  .cover-A h1 em { font-style: normal; color: var(--neon); }
+  .cover-A .lede { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 36px; gap: 60px; }
+  .cover-A .lede p { font-family: 'Space Grotesk', sans-serif; font-size: 22px; line-height: 1.4; max-width: 640px; color: rgba(244,241,234,0.85); margin: 0; }
+  .cover-A .meta { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--paper); letter-spacing: 0.18em; text-transform: uppercase; }
+  .cover-A .meta b { color: var(--neon); font-weight: 500; display: block; font-size: 28px; letter-spacing: 0.04em; margin-top: 6px; }
+
+  /* layout B — typographic poster */
+  .cover-B { background: var(--ink); display: none; }
+  .cover-B .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .cover-B .frame {
+    position: absolute; inset: 96px;
+    border: 2px solid var(--neon);
+    padding: 56px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cover-B .megatype {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 480px;
+    line-height: 0.78;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+  .cover-B .megatype span { color: var(--neon); }
+  .cover-B .row { display: flex; justify-content: space-between; align-items: flex-end; }
+  .cover-B .row .left { font-family: 'JetBrains Mono', monospace; color: var(--paper); font-size: 18px; letter-spacing: 0.1em; line-height: 1.6; text-transform: uppercase; }
+  .cover-B .row .left b { color: var(--neon); font-weight: 500; }
+  .cover-B .row .right { font-family: 'Archivo Black', sans-serif; font-size: 56px; color: var(--paper); text-align: right; line-height: 1; }
+  .cover-B .row .right em { color: var(--neon); font-style: normal; }
+
+  /* layout C — split deck (mural+wall) */
+  .cover-C { display: none; }
+  .cover-C .split { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+  .cover-C .pane { position: relative; overflow: hidden; }
+  .cover-C .pane img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.7) contrast(1.1); }
+  .cover-C .pane.dark { background: var(--ink); display: flex; align-items: center; justify-content: center; padding: 80px; box-sizing: border-box; }
+  .cover-C h1 { font-family: 'Archivo Black', sans-serif; font-size: 160px; line-height: 0.84; margin: 0; letter-spacing: -0.03em; }
+  .cover-C h1 em { font-style: normal; color: var(--neon); display: block; }
+  .cover-C .badge { position: absolute; top: 56px; left: 56px; }
+  .cover-C .meta { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; margin-top: 36px; line-height: 1.7; }
+  .cover-C .meta b { color: var(--neon); font-weight: 500; }
+  .cover-C .photo-cap { position: absolute; bottom: 40px; left: 40px; right: 40px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--paper); letter-spacing: 0.16em; text-transform: uppercase; display: flex; justify-content: space-between; }
+
+  body[data-cover="B"] .cover-A { display: none; }
+  body[data-cover="B"] .cover-B { display: block; }
+  body[data-cover="C"] .cover-A { display: none; }
+  body[data-cover="C"] .cover-C { display: block; }
+
+  /* ---------- generic content slide ---------- */
+  .slide-pad { padding: 96px 96px 80px 96px; box-sizing: border-box; height: 100%; display: flex; flex-direction: column; }
+  h2.kicker { font-family: 'Archivo Black', sans-serif; font-size: 88px; margin: 0; line-height: 0.92; letter-spacing: -0.025em; }
+  h2.kicker em { font-style: normal; color: var(--neon); }
+  .lede-big { font-size: 28px; line-height: 1.45; max-width: 1100px; color: rgba(244,241,234,0.85); margin: 24px 0 0; font-weight: 300; }
+  .rule { height: 2px; background: var(--neon); width: 96px; margin: 28px 0; }
+
+  /* About slide */
+  .two-col { display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; flex: 1; min-height: 0; }
+  .two-col .kpi-stack { display: grid; grid-template-rows: repeat(3, 1fr); gap: 28px; align-content: stretch; }
+  .kpi {
+    border: 1.5px solid var(--line);
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3));
+  }
+  .kpi .num { font-family: 'Archivo Black', sans-serif; font-size: 92px; line-height: 0.9; color: var(--neon); letter-spacing: -0.03em; min-width: 220px; }
+  .kpi .lab { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .kpi .lab b { display: block; color: var(--paper); font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 500; letter-spacing: 0; text-transform: none; margin-bottom: 4px; line-height: 1.3; }
+
+  /* location slide */
+  .map-stage {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 30% 30%, rgba(200,255,46,0.05), transparent 60%),
+      var(--ink-2);
+  }
+  .map-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map-pin { position: absolute; transform: translate(-50%, -100%); }
+  .map-pin .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 0 6px rgba(200,255,46,0.2), 0 0 24px var(--neon); }
+  .map-pin .lbl { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--paper); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.14em; white-space: nowrap; }
+  .map-pin.hub { transform: translate(-50%, -100%); }
+  .map-pin.hub .dot { width: 22px; height: 22px; background: var(--paper); box-shadow: 0 0 0 8px rgba(244,241,234,0.15); }
+  .map-pin.hub .lbl { color: var(--neon); font-size: 18px; font-weight: 700; }
+
+  /* schedule slide */
+  .timeline {
+    flex: 1; display: grid; grid-template-rows: auto 1fr;
+    border: 1.5px solid var(--line);
+    background: var(--ink-2);
+  }
+  .timeline-head { display: grid; grid-template-columns: repeat(12, 1fr); border-bottom: 1.5px solid var(--line); }
+  .timeline-head div { padding: 18px 12px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); border-right: 1px solid rgba(255,255,255,0.05); text-align: center; letter-spacing: 0.1em; }
+  .timeline-head div:last-child { border-right: none; }
+  .timeline-head div b { display: block; color: var(--paper); font-family: 'Archivo Black', sans-serif; font-size: 28px; letter-spacing: 0; margin-bottom: 4px; }
+  .timeline-body { position: relative; }
+  .track {
+    position: absolute; height: 88px;
+    border-radius: 3px;
+    padding: 16px 22px;
+    box-sizing: border-box;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .track.t1 { background: var(--neon); color: #000; }
+  .track.t2 { background: transparent; border: 2px solid var(--neon); color: var(--paper); }
+  .track .name { font-family: 'Archivo Black', sans-serif; font-size: 26px; line-height: 1; }
+  .track .sub { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; opacity: 0.85; }
+
+  /* artists grid */
+  .artists { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex: 1; }
+  .artist-card {
+    border: 1.5px solid var(--line);
+    padding: 18px 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 104px;
+    background: var(--ink-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .artist-card.lead { background: var(--neon); color: #000; border-color: var(--neon); }
+  .artist-card .num { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.18em; opacity: 0.6; }
+  .artist-card .nm { font-family: 'Archivo Black', sans-serif; font-size: 26px; line-height: 1; letter-spacing: -0.01em; }
+  .artist-card.lead .nm { font-size: 28px; }
+  .artist-card .role { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-top: 6px; }
+  .artist-card .ig { font-family: 'JetBrains Mono', monospace; font-size: 13px; opacity: 0.55; }
+  .artist-card.lead .ig { opacity: 0.75; }
+
+  /* benefits */
+  .benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; flex: 1; }
+  .benefit {
+    border: 1.5px solid var(--line);
+    padding: 36px 40px;
+    display: grid; grid-template-rows: auto 1fr auto;
+    gap: 18px;
+    background: var(--ink-2);
+    position: relative;
+  }
+  .benefit .index { font-family: 'Archivo Black', sans-serif; font-size: 88px; color: var(--neon); line-height: 0.9; }
+  .benefit h3 { font-family: 'Space Grotesk', sans-serif; font-size: 32px; margin: 0; line-height: 1.2; font-weight: 600; }
+  .benefit p { margin: 0; font-size: 18px; line-height: 1.55; color: rgba(244,241,234,0.75); }
+  .benefit .pill { position: absolute; top: 28px; right: 28px; }
+
+  /* budget slide */
+  .budget {
+    flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px;
+  }
+  .budget .ask {
+    background: var(--neon); color: #000;
+    padding: 44px 48px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .budget .ask::before {
+    content: "ZAPOTRZEBOWANIE";
+    position: absolute; top: 32px; right: 32px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; opacity: 0.55;
+  }
+  .budget .ask .figure { font-family: 'Archivo Black', sans-serif; font-size: 220px; line-height: 0.85; letter-spacing: -0.04em; }
+  .budget .ask .figure em { font-style: normal; font-size: 60px; vertical-align: super; margin-left: 8px; }
+  .budget .ask .what { font-family: 'Archivo Black', sans-serif; font-size: 48px; line-height: 1; letter-spacing: -0.02em; }
+  .budget .ask .desc { font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 1.45; max-width: 520px; margin-top: 12px; opacity: 0.85; }
+  .budget .breakdown { display: flex; flex-direction: column; gap: 18px; }
+  .budget .row {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: baseline; gap: 24px;
+    padding: 12px 0;
+    border-bottom: 1.5px solid var(--line);
+  }
+  .budget .row .label { font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .budget .row .label b { display: block; color: var(--paper); font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 500; text-transform: none; letter-spacing: 0; margin-bottom: 2px; }
+  .budget .row .v { font-family: 'Archivo Black', sans-serif; font-size: 26px; color: var(--paper); letter-spacing: -0.02em; }
+
+  /* refs slide */
+  .refs { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 22px; flex: 1; }
+  .ref-card {
+    border: 1.5px solid var(--line);
+    padding: 32px 36px;
+    background: var(--ink-2);
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .ref-card .quote { font-family: 'Archivo Black', sans-serif; font-size: 200px; line-height: 0.7; color: var(--neon); position: absolute; top: 12px; right: 24px; opacity: 0.15; pointer-events: none; }
+  .ref-card h4 { font-family: 'Archivo Black', sans-serif; font-size: 36px; margin: 0 0 10px; line-height: 1; }
+  .ref-card .role { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--neon); }
+  .ref-card p { font-size: 19px; line-height: 1.5; color: rgba(244,241,234,0.78); margin: 18px 0 0; }
+  .ref-card.big { grid-row: span 1; }
+
+  /* impact slide */
+  .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; flex: 1; }
+  .impact-card {
+    border: 1.5px solid var(--line);
+    padding: 32px 36px;
+    background: var(--ink-2);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .impact-card.featured { background: var(--neon); color: #000; border-color: var(--neon); grid-column: span 2; }
+  .impact-card .num { font-family: 'Archivo Black', sans-serif; font-size: 130px; line-height: 0.85; letter-spacing: -0.04em; color: var(--paper); }
+  .impact-card.featured .num { color: #000; font-size: 200px; }
+  .impact-card .num em { font-style: normal; font-size: 0.4em; vertical-align: super; }
+  .impact-card .lab { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
+  .impact-card .lab b { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 22px; letter-spacing: 0; text-transform: none; opacity: 1; font-weight: 500; margin-bottom: 4px; }
+
+  /* contact slide */
+  .contact-stage {
+    flex: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: stretch;
+  }
+  .contact-card { border: 1.5px solid var(--line); padding: 36px 40px; display: flex; flex-direction: column; gap: 14px; background: var(--ink-2); }
+  .contact-card .nm { font-family: 'Archivo Black', sans-serif; font-size: 36px; line-height: 1; }
+  .contact-card .role { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--neon); letter-spacing: 0.16em; text-transform: uppercase; }
+  .contact-card .info { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: rgba(244,241,234,0.7); line-height: 1.7; margin-top: 6px; }
+  .cta-block {
+    background: var(--neon); color: #000;
+    padding: 56px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .cta-block .big { font-family: 'Archivo Black', sans-serif; font-size: 100px; line-height: 0.92; letter-spacing: -0.03em; }
+  .cta-block .hashtag { font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.05em; opacity: 0.7; }
+
+  /* program / etap slide */
+  .program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
+  .stage-card {
+    border: 1.5px solid var(--line);
+    padding: 44px 48px;
+    display: flex; flex-direction: column; gap: 24px;
+    background: var(--ink-2);
+    position: relative; overflow: hidden;
+  }
+  .stage-card.lead { background: var(--neon); color: #000; border-color: var(--neon); }
+  .stage-card .num-tag { font-family: 'Archivo Black', sans-serif; font-size: 220px; position: absolute; top: -40px; right: -8px; line-height: 1; opacity: 0.1; pointer-events: none; }
+  .stage-card .meta { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
+  .stage-card h3 { font-family: 'Archivo Black', sans-serif; font-size: 56px; margin: 0; line-height: 0.95; letter-spacing: -0.02em; }
+  .stage-card .desc { font-size: 19px; line-height: 1.55; }
+  .stage-card .row-mini { display: flex; gap: 28px; margin-top: 8px; }
+  .stage-card .row-mini > div { flex: 1; }
+  .stage-card .row-mini .k { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
+  .stage-card .row-mini .v { font-family: 'Archivo Black', sans-serif; font-size: 24px; line-height: 1.1; margin-top: 4px; }
+
+  /* mockup slide */
+  .mockup-stage {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    background: #0e0e0c;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mockup-stage img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .mockup-cap {
+    position: absolute; bottom: 24px; left: 28px; right: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+  }
+  .mockup-cap b { color: var(--neon); font-weight: 500; }
+
+  /* train ticker */
+  .ticker {
+    border: 1.5px solid var(--line);
+    padding: 16px 24px;
+    display: flex; gap: 36px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .ticker .pip { width: 8px; height: 8px; background: var(--neon); border-radius: 50%; }
+  .ticker b { color: var(--paper); font-weight: 500; }
+
+  /* sponsor logo placeholder */
+  .sponsor-strip {
+    margin-top: 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .sponsor-strip .slot {
+    border: 1.5px dashed rgba(255,255,255,0.18);
+    height: 88px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* tweaks panel host hooks */
+  .twk-host {}
+
+</style>
+</head>
+<body data-cover="A">
+
+<deck-stage>
+
+<!-- =============== SLIDE 1 — COVER =============== -->
+<section data-screen-label="01 Cover">
+
+  <!-- LAYOUT A — wall photo bleed -->
+  <div class="cover cover-A">
+    <div class="bg"><img src="uploads/wall_image-1778235756552.png" alt="Ściana oporowa Zbąszynek" /></div>
+    <div class="scrim"></div>
+    <div class="text">
+      <div style="display:flex; gap:16px; margin-bottom:36px;">
+        <div class="stamp solid">#ZbkTrain2win</div>
+        <div class="stamp">Pitch · Brillux</div>
+      </div>
+      <h1>TRAIN<em>2</em>WIN<br/>LOKOMOTYWA<br/><em>TUWIMA.</em></h1>
+      <div class="lede">
+        <p>Dziewięciodniowy event muralowy na 450-metrowej ścianie w Zbąszynku — w miejscu, przez które codziennie przejeżdża każdy pociąg z Berlina do Zielonej Góry.</p>
+        <div class="meta">
+          10 — 21 czerwca 2026
+          <b>Zbąszynek · ul. Okrężna</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYOUT B — typographic poster -->
+  <div class="cover cover-B">
+    <div class="grid"></div>
+    <div class="frame">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+          <div class="stamp solid">PITCH · BRILLUX</div>
+          <div class="small-mono" style="color:var(--paper)">PL · 06.2026</div>
+        </div>
+        <div class="megatype">TRAIN<span>2</span><br/>WIN.</div>
+      </div>
+      <div class="row">
+        <div class="left">
+          MURAL · LOKOMOTYWA TUWIMA<br/>
+          <b>15 ARTYSTÓW · 450 M ŚCIANY · 9 DNI</b><br/>
+          ZBĄSZYNEK · UL. OKRĘŻNA
+        </div>
+        <div class="right">10—21<br/><em>VI · 2026</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYOUT C — split: mural mockup + dark text pane -->
+  <div class="cover cover-C">
+    <div class="split">
+      <div class="pane"><img src="uploads/mural_image-1778235750604.png" alt="Wizualizacja muralu" />
+        <div class="photo-cap"><span>SZKIC · TRAIN2WIN_V1</span><span style="color:var(--neon)">DRAFT</span></div>
+      </div>
+      <div class="pane dark">
+        <div class="badge stamp solid">#ZbkTrain2win</div>
+        <div>
+          <h1>LOKOMOTYWA<em>TUWIMA.</em></h1>
+          <div class="meta">
+            10—21 CZERWCA 2026 · ZBĄSZYNEK<br/>
+            450 m ściany · 1000 m² · <b>15 artystów</b><br/><br/>
+            PROPOZYCJA WSPÓŁPRACY DLA <b>BRILLUX POLSKA</b>
+          </div>
+        </div>
+        <div class="stamp warn">CONFIDENTIAL · v1.0</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =============== SLIDE 2 — O PROJEKCIE =============== -->
+<section data-screen-label="02 O projekcie">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>02 · IDEA</div><div class="pageno">02 <em>/ 12</em></div></div><div class="bot"><div class="tag">#ZbkTrain2win</div><div class="tag">Train2Win — Lokomotywa Tuwima</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div class="eyebrow">O projekcie</div>
+    <h2 class="kicker">Wiersz, który<br/>jedzie <em>1000 m² betonu.</em></h2>
+    <div class="rule"></div>
+    <p class="lede-big">Z polecenia Burmistrza Zbąszynka realizujemy mural inspirowany „Lokomotywą" Juliana Tuwima na świeżo oddanej ścianie oporowej. 15 polskich artystów wielkoformatowych dzieli skład na wagony — każdy interpretuje swój fragment pod dyrekcją artystyczną Raku3D, w spójnej palecie, z kontrolowanym „bajzlem" jak w samym wierszu.</p>
+    <div style="flex:1;"></div>
+    <div class="two-col" style="flex: 0 0 auto; margin-top:48px;">
+      <div>
+        <div class="kpi-stack">
+          <div class="kpi"><div class="num">450<em style="font-size:0.4em; vertical-align: super;">m</em></div><div class="lab"><b>Długość ściany</b>od głównego wjazdu do miasta<br/>do linii kolejowej PKP</div></div>
+          <div class="kpi"><div class="num">~1000<em style="font-size:0.4em; vertical-align: super;">m²</em></div><div class="lab"><b>Powierzchnia muralu</b>wysokość 1,2 — 3,0 m, zagruntowany<br/>beton oddany do użytku w 2025</div></div>
+          <div class="kpi"><div class="num">9<em style="font-size:0.4em; vertical-align: super;">dni</em></div><div class="lab"><b>Czas trwania eventu</b>10 — 21 czerwca 2026 · dwa etapy<br/>z otwartym Graffiti Jam na finał</div></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:24px; padding-top: 4px;">
+        <div class="ticker"><span class="pip"></span><span>POCIĄGI · ICC · TLK · REGIO</span><b>BERLIN — RZEPIN — ZIELONA GÓRA</b></div>
+        <div style="border:1.5px solid var(--line); padding:32px 36px; flex:1; display:flex; flex-direction:column; justify-content:center; gap:18px;">
+          <div class="eyebrow" style="color:var(--paper)">DLACZEGO TO DZIAŁA</div>
+          <p style="margin:0; font-size:21px; line-height:1.55; color: rgba(244,241,234,0.85);">
+            Wiersz Tuwima jest „<b style="color:var(--neon); font-weight:500;">złożony, gwarny, plastyczny i obrazowy</b>" — dokładnie te cechy oddajemy poprzez różnorodność stylów 15 artystów spiętych jednym kierunkiem artystycznym.
+          </p>
+          <p style="margin:0; font-size:21px; line-height:1.55; color: rgba(244,241,234,0.85);">
+            Druga część eventu — <b style="color:var(--neon); font-weight:500;">Train2Win Graffiti Jam</b> — otwiera ścianę dla społeczności i 25 dodatkowych artystów. To muzyka, warsztaty i finał, który zostaje na YouTube.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 3 — LOKALIZACJA =============== -->
+<section data-screen-label="03 Lokalizacja">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>03 · MIEJSCE</div><div class="pageno">03 <em>/ 12</em></div></div><div class="bot"><div class="tag">ul. Okrężna · Zbąszynek</div><div class="tag">52.241°N · 15.815°E</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:60px;">
+      <div>
+        <div class="eyebrow">Lokalizacja i zasięg</div>
+        <h2 class="kicker">Codziennie<br/>przejeżdża <em>każdy pociąg.</em></h2>
+      </div>
+      <div style="text-align:right;">
+        <div class="small-mono">Linia kolejowa nr 3 · Berlin — Warszawa</div>
+        <div class="small-mono">+ wjazd południowy do miasta</div>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="map-stage" style="margin-top: 24px;">
+      <!-- stylized rail map -->
+      <svg class="map-svg" viewBox="0 0 1700 540" preserveAspectRatio="none">
+        <defs>
+          <pattern id="dots" patternUnits="userSpaceOnUse" width="32" height="32">
+            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.06)"/>
+          </pattern>
+          <linearGradient id="rail" x1="0" x2="1">
+            <stop offset="0" stop-color="#c8ff2e"/>
+            <stop offset="1" stop-color="#c8ff2e"/>
+          </linearGradient>
+        </defs>
+        <rect width="1700" height="540" fill="url(#dots)"/>
+        <!-- rail line -->
+        <path d="M 80 270 Q 380 200 720 280 T 1100 300 T 1620 250" stroke="#3a3a32" stroke-width="6" fill="none" stroke-dasharray="2 14" stroke-linecap="round"/>
+        <!-- highlighted segment near hub -->
+        <path d="M 760 290 Q 880 296 980 296" stroke="url(#rail)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- wall band -->
+        <rect x="800" y="310" width="200" height="14" fill="#c8ff2e" opacity="0.85"/>
+        <rect x="800" y="310" width="200" height="14" fill="none" stroke="#000" stroke-width="1"/>
+        <text x="900" y="358" text-anchor="middle" fill="#c8ff2e" font-family="JetBrains Mono" font-size="14" letter-spacing="3">ŚCIANA · 450 m</text>
+      </svg>
+      <!-- pins -->
+      <div class="map-pin" style="left:5%; top:50%;"><div class="dot"></div><div class="lbl">Berlin</div></div>
+      <div class="map-pin" style="left:24%; top:42%;"><div class="dot"></div><div class="lbl">Rzepin</div></div>
+      <div class="map-pin hub" style="left:53%; top:52%;"><div class="dot"></div><div class="lbl">Zbąszynek</div></div>
+      <div class="map-pin" style="left:75%; top:55%;"><div class="dot"></div><div class="lbl">Zielona Góra</div></div>
+      <div class="map-pin" style="left:94%; top:46%;"><div class="dot"></div><div class="lbl">Poznań</div></div>
+
+      <!-- corner caption -->
+      <div style="position:absolute; left:32px; top:24px; max-width:340px;">
+        <div class="eyebrow">Widoczność</div>
+        <p style="font-size:18px; line-height:1.5; color: rgba(244,241,234,0.78); margin: 8px 0 0;">Ściana zaczyna się przy głównym wjeździe do Zbąszynka od południa, a kończy w punkcie, przez który <b style="color:var(--neon); font-weight:500;">przejeżdżają wszystkie pociągi</b> ICC, TLK i Regio na trasie Berlin — Rzepin — Zielona Góra.</p>
+      </div>
+      <div style="position:absolute; right:32px; bottom:32px; display:flex; gap:14px;">
+        <div class="stamp">ICC</div>
+        <div class="stamp">TLK</div>
+        <div class="stamp">REGIO</div>
+        <div class="stamp solid">EXPONOWANE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 4 — MOCKUP =============== -->
+<section data-screen-label="04 Wizualizacja">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>04 · WIZUALIZACJA</div><div class="pageno">04 <em>/ 12</em></div></div><div class="bot"><div class="tag">SZKIC v1 · TRAIN2WIN</div><div class="tag">DYREKCJA: RAKU3D</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:60px;">
+      <div>
+        <div class="eyebrow">Mockup muralu</div>
+        <h2 class="kicker">Skład <em>w jednym</em><br/>spójnym <em>bajzlu.</em></h2>
+      </div>
+      <p style="font-size:20px; line-height:1.5; max-width:520px; color: rgba(244,241,234,0.78); margin:0;">
+        Każdy artysta dostaje swój wagon. Sąsiednie prace „nachodzą na siebie" — paleta i rytm są kontrolowane, ale styl każdego twórcy zostaje wyeksponowany.
+      </p>
+    </div>
+    <div class="rule"></div>
+    <div class="mockup-stage" style="margin-top: 24px;">
+      <img src="uploads/mural_image-1778235750604.png" alt="Wizualizacja muralu Train2Win" />
+      <div class="mockup-cap">
+        <span>· · · · · · · · · ·</span>
+        <span>SZKIC ROBOCZY · DYREKCJA <b>RAKU3D</b> · v.04.05.2026</span>
+        <span>· · · · · · · · · ·</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 5 — HARMONOGRAM =============== -->
+<section data-screen-label="05 Harmonogram">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>05 · HARMONOGRAM</div><div class="pageno">05 <em>/ 12</em></div></div><div class="bot"><div class="tag">9 dni · 2 etapy</div><div class="tag">10 — 21 VI 2026</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div class="eyebrow">Harmonogram</div>
+    <h2 class="kicker">Dwa etapy.<br/><em>Jedna ściana.</em></h2>
+    <div class="rule"></div>
+
+    <div class="timeline" style="margin-top: 24px;">
+      <div class="timeline-head">
+        <div><b>10</b>Śr</div><div><b>11</b>Cz</div><div><b>12</b>Pt</div><div><b>13</b>So</div>
+        <div><b>14</b>Nd</div><div><b>15</b>Pn</div><div><b>16</b>Wt</div><div><b>17</b>Śr</div>
+        <div><b>18</b>Cz</div><div><b>19</b>Pt</div><div><b>20</b>So</div><div><b>21</b>Nd</div>
+      </div>
+      <div class="timeline-body">
+        <!-- Etap I: 12-19, kolumny 3-10 -->
+        <div class="track t1" style="left: calc(100%/12 * 2 + 12px); width: calc(100%/12 * 7 - 24px); top: 60px;">
+          <div class="name">ETAP I — LOKOMOTYWA TUWIMA</div>
+          <div class="sub">15 artystów · dyrekcja Raku3D · spójna paleta · zakwaterowanie + wynagrodzenie</div>
+        </div>
+        <!-- Etap II: 19-21, kolumny 9-11 -->
+        <div class="track t2" style="left: calc(100%/12 * 9 + 12px); width: calc(100%/12 * 2 + 24px); top: 180px;">
+          <div class="name">ETAP II — TRAIN2WIN GRAFFITI JAM</div>
+          <div class="sub">+25 artystów · warsztaty Wyszło Jak Wyszło · DJ.Jus · DJ Wuber · otwarcie ściany</div>
+        </div>
+        <!-- przygotowania -->
+        <div class="track" style="left: 12px; width: calc(100%/12 * 2 - 24px); top: 300px; background: transparent; border: 2px dashed var(--muted); color: var(--muted);">
+          <div class="name" style="font-size: 22px;">Logistyka · grunt · materiały</div>
+          <div class="sub">10 — 11 czerwca</div>
+        </div>
+        <!-- documentation -->
+        <div class="track" style="left: calc(100%/12 * 2 + 12px); width: calc(100%/12 * 9 - 24px); top: 420px; background: transparent; border-top: 2px solid rgba(200,255,46,0.4); border-bottom: 2px solid rgba(200,255,46,0.4); border-left: none; border-right: none; color: var(--neon);">
+          <div class="name" style="font-size:20px; font-family:'JetBrains Mono', monospace; letter-spacing:0.16em; text-transform:uppercase;">··· DOKUMENTACJA WIDEO · #ZbkTrain2win ···</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:32px; margin-top: 28px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase;">
+      <span><span style="display:inline-block; width:14px; height:14px; background:var(--neon); margin-right:8px; vertical-align:middle;"></span>Etap I — produkcja muralu</span>
+      <span><span style="display:inline-block; width:14px; height:14px; border:2px solid var(--neon); margin-right:8px; vertical-align:middle;"></span>Etap II — Graffiti Jam + program publiczny</span>
+      <span><span style="display:inline-block; width:14px; height:14px; border:2px dashed var(--muted); margin-right:8px; vertical-align:middle;"></span>Przygotowania</span>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 6 — ZESPÓŁ I ARTYŚCI =============== -->
+<section data-screen-label="06 Zespol i artysci">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>06 · ZESPÓŁ</div><div class="pageno">06 <em>/ 12</em></div></div><div class="bot"><div class="tag">15 artystów · 1 dyrekcja artystyczna</div><div class="tag">~145 000 obserwujących na IG</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap: 60px;">
+      <div>
+        <div class="eyebrow">Zespół + artyści Etapu I</div>
+        <h2 class="kicker">Pionierzy<br/>polskiego <em>muralu.</em></h2>
+      </div>
+      <div style="text-align:right;">
+        <div class="small-mono" style="color:var(--paper)">ORGANIZACJA</div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:15px; line-height:1.7; color: rgba(244,241,234,0.7); letter-spacing: 0.04em;">
+          <b style="color:var(--paper)">Jarosław Fabiś</b> · organizacja, skarbnik<br/>
+          <b style="color:var(--paper)">Mr.Max</b> · organizacja<br/>
+          <b style="color:var(--paper)">Rafał „Raku"</b> · dyrekcja artystyczna<br/>
+          <b style="color:var(--paper)">Jakub „Fiks"</b> · Graffiti Jam
+        </div>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="artists" style="margin-top: 24px;">
+      <div class="artist-card lead">
+        <div>
+          <div class="num">01</div>
+          <div class="nm">RAKU3D</div>
+          <div class="role">DYREKCJA ARTYSTYCZNA · PIONIER PL</div>
+        </div>
+        <div class="ig">@raku_3d</div>
+      </div>
+      <div class="artist-card"><div><div class="num">02</div><div class="nm">BARY</div><div class="role">Mural przy Piotrkowskiej (Łódź, 2002)</div></div><div class="ig">@barysdigital</div></div>
+      <div class="artist-card"><div><div class="num">03</div><div class="nm">BIKO</div><div class="role">Pionier · Zielona Góra</div></div><div class="ig">@bikoartinsta</div></div>
+      <div class="artist-card"><div><div class="num">04</div><div class="nm">MR.MAX</div><div class="role">Organizator + artysta</div></div><div class="ig">@armitiel</div></div>
+
+      <div class="artist-card"><div><div class="num">05</div><div class="nm">WAEK</div><div class="role">Wielkoformat</div></div><div class="ig">@waekinsta</div></div>
+      <div class="artist-card"><div><div class="num">06</div><div class="nm">PUBLIC SURFER</div><div class="role">Street + ilustracja</div></div><div class="ig">@publicsurfer</div></div>
+      <div class="artist-card"><div><div class="num">07</div><div class="nm">SZWEDZKI</div><div class="role">Kompozycja + typografia</div></div><div class="ig">@szwedzkiart</div></div>
+      <div class="artist-card"><div><div class="num">08</div><div class="nm">KETSON</div><div class="role">Graffiti</div></div><div class="ig">@ket124sw307</div></div>
+
+      <div class="artist-card"><div><div class="num">09</div><div class="nm">UNIK</div><div class="role">Painting</div></div><div class="ig">@unik94_painting</div></div>
+      <div class="artist-card"><div><div class="num">10</div><div class="nm">PIDEK</div><div class="role">Charakter + figura</div></div><div class="ig">@pidek__</div></div>
+      <div class="artist-card"><div><div class="num">11</div><div class="nm">PCOK2</div><div class="role">Graffiti</div></div><div class="ig">@pcok2</div></div>
+      <div class="artist-card"><div><div class="num">12</div><div class="nm">KUBA KUJAWA</div><div class="role">Wielkoformat</div></div><div class="ig">@kuba_kujawa</div></div>
+
+      <div class="artist-card"><div><div class="num">13</div><div class="nm">MEIN</div><div class="role">Painting</div></div><div class="ig">@mein_zzz</div></div>
+      <div class="artist-card"><div><div class="num">14</div><div class="nm">NORIAKI</div><div class="role">Graffiti</div></div><div class="ig">@noriakinoriaki</div></div>
+      <div class="artist-card"><div><div class="num">15</div><div class="nm">SLASH</div><div class="role">Graffiti</div></div><div class="ig">@slash.97</div></div>
+      <div class="artist-card"><div><div class="num">16</div><div class="nm">JAREK FABIŚ</div><div class="role">Organizator + artysta</div></div><div class="ig">@jarek.fabis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 7 — PROGRAM (etap I + II) =============== -->
+<section data-screen-label="07 Program">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>07 · PROGRAM</div><div class="pageno">07 <em>/ 12</em></div></div><div class="bot"><div class="tag">Co konkretnie się wydarzy</div><div class="tag">Train2Win</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div class="eyebrow">Program eventu</div>
+    <h2 class="kicker">Najpierw <em>poemat.</em><br/>Potem <em>impreza.</em></h2>
+    <div class="rule"></div>
+    <div class="program-grid" style="margin-top: 24px;">
+      <div class="stage-card lead">
+        <div class="num-tag">I</div>
+        <div class="meta">12 — 19 czerwca · 8 dni</div>
+        <h3>ETAP I —<br/>LOKOMOTYWA<br/>TUWIMA.</h3>
+        <div class="desc">15 artystów dzieli skład na wagony i interpretuje swój fragment wiersza. Kontrolowana paleta kolorów i rytm, kreatywna swoboda na styl. Sąsiednie prace „nachodzą na siebie" — to ma być spójny bajzel.</div>
+        <div class="row-mini">
+          <div><div class="k">Dyrekcja</div><div class="v">Raku3D</div></div>
+          <div><div class="k">Zapewnione</div><div class="v">Hotel · wyżywienie · materiały</div></div>
+          <div><div class="k">Rozliczenie</div><div class="v">Umowa o dzieło z gminą</div></div>
+        </div>
+      </div>
+      <div class="stage-card">
+        <div class="num-tag" style="color:var(--neon)">II</div>
+        <div class="meta" style="color:var(--neon)">19 — 21 czerwca · 3 dni</div>
+        <h3>ETAP II —<br/>TRAIN2WIN<br/>GRAFFITI JAM.</h3>
+        <div class="desc">Otwarcie ściany dla społeczności. +25 artystów maluje w spójnej palecie ustalonej przez Raku3D. Warsztaty, muzyka i finał, który jedzie w media i social.</div>
+        <div class="row-mini">
+          <div><div class="k">Warsztaty</div><div class="v">Wyszło Jak Wyszło<br/>P. Szydłowski</div></div>
+          <div><div class="k">Muzyka</div><div class="v">DJ.Jus (UK/PL)<br/>DJ Wuber + gość</div></div>
+          <div><div class="k">Otwarcie ściany</div><div class="v">Dla społeczności<br/>na stałe</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 8 — KORZYŚCI DLA SPONSORA =============== -->
+<section data-screen-label="08 Co zyskuje sponsor">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>08 · KORZYŚCI</div><div class="pageno">08 <em>/ 12</em></div></div><div class="bot"><div class="tag">Co zyskuje Brillux</div><div class="tag">Pakiet otwarty na rozmowę</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:60px;">
+      <div>
+        <div class="eyebrow">Co zyskuje sponsor</div>
+        <h2 class="kicker">Cztery rzeczy.<br/><em>Konkretnie.</em></h2>
+      </div>
+      <p style="font-size:20px; line-height:1.5; max-width:480px; color: rgba(244,241,234,0.78); margin:0;">
+        Pakiet otwarty na rozmowę. Skala ekspozycji rośnie wraz z zaangażowaniem — od logo na ścianie po pełną integrację z dokumentacją wideo i social mediami.
+      </p>
+    </div>
+    <div class="rule"></div>
+    <div class="benefits" style="margin-top: 24px;">
+      <div class="benefit">
+        <div class="index">01</div>
+        <h3>Logo na najlepszym miejscu ściany</h3>
+        <p>Reklama Brillux na ścianie w najbardziej eksponowanym punkcie — widoczna z każdego pociągu na trasie. Logo namalowane jeszcze przed startem właściwego muralu, eksponowane przez cały okres trwania eventu.</p>
+        <div class="pill stamp solid">PRIME</div>
+      </div>
+      <div class="benefit">
+        <div class="index">02</div>
+        <h3>Prawa do wykorzystania materiałów wideo i foto</h3>
+        <p>Dostęp do całej dokumentacji nakręconej i sponsorowanej przez gminę Zbąszynek w ramach projektu Train2Win. Materiał o potencjale viralowym do swobodnego użycia w komunikacji marki.</p>
+        <div class="pill stamp">USAGE RIGHTS</div>
+      </div>
+      <div class="benefit">
+        <div class="index">03</div>
+        <h3>Promocja w mediach społecznościowych</h3>
+        <p>Wskazany przez Brillux link / profil promowany w ramach akcji: SM Jarka Fabisia, Urzędu Miasta Zbąszynek oraz nowo powstających kanałów Train2Win. Hasztag <b style="color:var(--neon); font-weight:500;">#ZbkTrain2win</b> spina cały content.</p>
+        <div class="pill stamp">SM</div>
+      </div>
+      <div class="benefit">
+        <div class="index">04</div>
+        <h3>Dostęp do społeczności artystów</h3>
+        <p>15 + 25 polskich artystów wielkoformatowych w jednym miejscu, z których wielu wyraziło już zainteresowanie produktem Evocryl 200 ze względu na odporność na UV. Naturalny kanał testowy i rekomendacyjny.</p>
+        <div class="pill stamp">COMMUNITY</div>
+      </div>
+    </div>
+    <p class="small-mono" style="margin-top: 16px;">* Organizator nie gwarantuje, że którykolwiek z artystów będzie reklamował Brillux na swoich kanałach społecznościowych — wynika to z dobrowolności udziału.</p>
+  </div>
+</section>
+
+<!-- =============== SLIDE 9 — ZAPOTRZEBOWANIE =============== -->
+<section data-screen-label="09 Zapotrzebowanie">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>09 · ZAPOTRZEBOWANIE</div><div class="pageno">09 <em>/ 12</em></div></div><div class="bot"><div class="tag">Konkretnie. Jasno.</div><div class="tag">Brillux Evocryl 200</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 110px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap: 60px;">
+      <div>
+        <div class="eyebrow">Zapotrzebowanie</div>
+        <h2 class="kicker" style="font-size:72px;">Prosimy o <em>farbę.</em></h2>
+      </div>
+      <p class="small-mono" style="max-width:380px; text-align:right; line-height:1.6;">Tę dobrą — odporną na UV. Reszta logistyki jest po naszej stronie.</p>
+    </div>
+    <div class="rule"></div>
+    <div class="budget" style="margin-top: 24px;">
+      <div class="ask">
+        <div>
+          <div class="figure">140<em>L</em></div>
+          <div class="what">BRILLUX<br/>EVOCRYL 200.</div>
+          <p class="desc">Farba elewacyjna z czystego akrylu — odporność na promienie UV jest powodem, dla którego artyści zaangażowani w projekt sami wskazali ten produkt jako pożądany. Mural na otwartej ścianie betonowej musi przetrwać lata.</p>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+          <div style="font-family:'JetBrains Mono', monospace; font-size:14px; letter-spacing:0.16em; text-transform:uppercase; opacity:0.55;">Cała pozostała logistyka pokryta jest po stronie organizatora i gminy.</div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:42px;">→</div>
+        </div>
+      </div>
+      <div class="breakdown">
+        <div class="eyebrow" style="color:var(--paper); margin-bottom: 10px;">Co pokrywamy sami</div>
+        <div class="row"><div class="label"><b>Honoraria artystów</b>Umowy o dzieło z gminą Zbąszynek</div><div class="v">URZĄD</div></div>
+        <div class="row"><div class="label"><b>Hotel + pełne wyżywienie</b>10 — 19 czerwca, 15 osób</div><div class="v">URZĄD</div></div>
+        <div class="row"><div class="label"><b>Przygotowanie ściany + grunt + sprzęt</b>Stan na start · puszki · akcesoria</div><div class="v">URZĄD</div></div>
+        <div class="row"><div class="label"><b>Dokumentacja wideo + foto</b>Materiał z potencjałem viral</div><div class="v">ORG</div></div>
+        <div class="row" style="border-bottom: none;"><div class="label"><b>DJ-e + warsztaty + program</b>Etap II</div><div class="v">ORG</div></div>
+        <div style="margin-top: 16px; padding: 18px 22px; border: 2px solid var(--neon); display:flex; justify-content:space-between; align-items:center;">
+          <div class="eyebrow" style="color: var(--neon);">Pozostaje farba</div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size: 30px; color: var(--neon);">140 L EVOCRYL 200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 10 — REFERENCJE =============== -->
+<section data-screen-label="10 Referencje">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>10 · REFERENCJE</div><div class="pageno">10 <em>/ 12</em></div></div><div class="bot"><div class="tag">Dlaczego ten zespół</div><div class="tag">Pionierzy sceny PL</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div class="eyebrow">Dotychczasowe realizacje</div>
+    <h2 class="kicker">Z tymi ludźmi<br/><em>nie ma porażek.</em></h2>
+    <div class="rule"></div>
+    <div class="refs" style="margin-top: 24px;">
+      <div class="ref-card">
+        <div class="quote">★</div>
+        <div>
+          <div class="role">Dyrekcja artystyczna</div>
+          <h4>RAFAŁ „RAKU"</h4>
+        </div>
+        <p>Pionier polskiej sceny malarstwa wielkoformatowego. W projekcie odpowiada za końcowy efekt — dba o to, żeby 15 indywidualnych stylów złożyło się w jedną, czytelną kompozycję.<br/><br/><span class="small-mono">@raku_3d</span></p>
+      </div>
+      <div class="ref-card">
+        <div class="quote">02</div>
+        <div>
+          <div class="role">Realizacja referencyjna</div>
+          <h4>BARY</h4>
+        </div>
+        <p>Współtwórca jednego z największych murali w Europie — Mural przy Piotrkowskiej w Łodzi (2002). Wydarzenie w skali całej polskiej sceny.<br/><br/><span class="small-mono">@barysdigital</span></p>
+      </div>
+      <div class="ref-card">
+        <div class="quote">03</div>
+        <div>
+          <div class="role">Wpływ regionalny</div>
+          <h4>BIKO</h4>
+        </div>
+        <p>Zielonogórska legenda — miał wpływ na każdego artystę w promieniu 100 km od Zielonej Góry. Lokalny autorytet podpięty pod projekt.<br/><br/><span class="small-mono">@bikoartinsta</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 11 — WPŁYW + ZASIĘG =============== -->
+<section data-screen-label="11 Wplyw spoleczny">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>11 · WPŁYW</div><div class="pageno">11 <em>/ 12</em></div></div><div class="bot"><div class="tag">Mierzymy w pociągach, obserwatorach i metrach</div><div class="tag">#ZbkTrain2win</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div class="eyebrow">Wpływ społeczny + zasięg</div>
+    <h2 class="kicker">Liczby, które<br/>zostają <em>na ścianie.</em></h2>
+    <div class="rule"></div>
+    <div class="impact-grid" style="margin-top: 24px;">
+      <div class="impact-card featured">
+        <div class="num">~145<em>k</em></div>
+        <div class="lab"><b>Łączny zasięg artystów na Instagramie</b>15 artystów Etapu I + 25 z Graffiti Jam · realny zasięg sceny muralowej w PL</div>
+      </div>
+      <div class="impact-card">
+        <div class="num">450<em>m</em></div>
+        <div class="lab"><b>Ekspozycja stała</b>Mural zostaje na lata · gmina Zbąszynek</div>
+      </div>
+      <div class="impact-card">
+        <div class="num">9</div>
+        <div class="lab"><b>Dni programu publicznego</b>Warsztaty · DJ-e · Graffiti Jam</div>
+      </div>
+
+      <div class="impact-card">
+        <div class="num">3<em>+</em></div>
+        <div class="lab"><b>Linie pociągów</b>ICC · TLK · Regio<br/>Berlin — Zielona Góra</div>
+      </div>
+      <div class="impact-card">
+        <div class="num">40</div>
+        <div class="lab"><b>Artystów łącznie</b>Etap I (15) + Graffiti Jam (25)</div>
+      </div>
+      <div class="impact-card">
+        <div class="num">1</div>
+        <div class="lab"><b>Film dokumentalny</b>YouTube + media · potencjał viral</div>
+      </div>
+      <div class="impact-card">
+        <div class="num">∞</div>
+        <div class="lab"><b>Otwarcie ściany dla społeczności</b>Po Graffiti Jam · żywa galeria</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SLIDE 12 — KONTAKT =============== -->
+<section data-screen-label="12 Kontakt">
+  <div class="chrome"><div class="top"><div class="tag"><span class="dot"></span>12 · KONTAKT</div><div class="pageno">12 <em>/ 12</em></div></div><div class="bot"><div class="tag">Czekamy na Wasze pytania</div><div class="tag">#ZbkTrain2win</div></div></div>
+  <div class="grain"></div>
+  <div class="slide-pad" style="padding-top: 130px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap: 60px;">
+      <div>
+        <div class="eyebrow">Wezwanie do działania</div>
+        <h2 class="kicker">Pomalujmy to <em>razem.</em></h2>
+      </div>
+      <div class="small-mono" style="color: var(--paper); text-align:right;">10 — 21 czerwca 2026 · Zbąszynek<br/>Termin decyzji: <b style="color: var(--neon);">do 30 maja 2026</b></div>
+    </div>
+    <div class="rule"></div>
+    <div class="contact-stage" style="margin-top: 24px;">
+      <div style="display:grid; grid-template-rows: 1fr 1fr; gap: 22px;">
+        <div class="contact-card">
+          <div class="role">Organizacja · skarbnik</div>
+          <div class="nm">JAROSŁAW FABIŚ</div>
+          <div class="info">
+            @jarek.fabis<br/>
+            Logistyka Etapu I · pełny zakres umów<br/>
+            <span style="color:var(--paper)">→ kontakt główny w sprawie sponsoringu</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+          <div class="contact-card">
+            <div class="role">Dyrekcja artystyczna</div>
+            <div class="nm">RAKU3D</div>
+            <div class="info">@raku_3d<br/>Pionier sceny PL</div>
+          </div>
+          <div class="contact-card">
+            <div class="role">Graffiti Jam</div>
+            <div class="nm">FIKS</div>
+            <div class="info">@prefiks1<br/>Etap II · program</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-block">
+        <div>
+          <div style="font-family:'JetBrains Mono', monospace; font-size:14px; letter-spacing:0.18em; text-transform:uppercase; margin-bottom: 24px;">Brillux Polska →</div>
+          <div class="big">Wsiadasz?</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+          <div class="hashtag">#ZbkTrain2win</div>
+          <div style="font-family:'Archivo Black', sans-serif; font-size:60px; line-height:1;">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+<!-- speaker notes -->
+<script type="application/json" id="speaker-notes">
+[
+  "Dzień dobry. Dziękuję, że znaleźliście dla nas czas. Pokażę Wam dziewięciodniowy projekt muralowy, który ruszy w czerwcu w Zbąszynku — i dlaczego dla Brilluxa to jest naturalna ekspozycja, której nie da się kupić billboardem. Jeśli macie pytania w trakcie, wchodźcie śmiało, im wcześniej tym lepiej. Slajdów jest dwanaście, mieścimy się w piętnastu minutach.",
+
+  "Pomysł jest prosty — zinterpretować „Lokomotywę\" Tuwima na ścianie oporowej, którą gmina Zbąszynek oddała do użytku w zeszłym roku. Sam wiersz ma w sobie dokładnie to, czego szukamy w muralu: jest gwarny, plastyczny, obrazowy. Dlatego zamiast jednego artysty zrobimy to piętnastoma — każdy weźmie swój wagon i swój fragment wiersza. Spinamy to wspólną paletą i dyrekcją artystyczną Raku3D, żeby z różnorodności wyszedł jeden czytelny obraz, a nie chaos. Po stronie produkcyjnej liczby są takie — czterysta pięćdziesiąt metrów ściany, około tysiąca metrów kwadratowych, dziewięć dni eventu z dwoma etapami. Ważne: to inicjatywa Burmistrza Zbąszynka i gmina jest naszym oficjalnym partnerem — umowy z artystami zawiera urząd.",
+
+  "Ten slajd robi tu najwięcej roboty. Ściana zaczyna się przy głównym wjeździe do Zbąszynka od południa, a ciągnie się aż do linii kolejowej numer trzy — to korytarz Berlin–Warszawa. Każdy ICC, TLK i Regio na trasie Berlin–Rzepin–Zielona Góra przejeżdża obok. To nie jest reklama, którą widzą sąsiedzi z osiedla — to ekspozycja, którą codziennie widzi tysiące pasażerów pociągów dalekobieżnych. I co istotne dla Brilluxa: ten mural zostaje na ścianie na lata, nie na cykl kampanijny.",
+
+  "Tu jest roboczy szkic, nad którym pracujemy z artystami. Zwracam uwagę na dwie rzeczy. Po pierwsze: każdy artysta dostaje swój wagon i ma w nim swobodę, ale paleta i rytm są kontrolowane — Raku trzyma to wszystko w ryzach. Po drugie: prosimy artystów, żeby sąsiednie prace „nachodziły na siebie\". To nie jest patchwork — to jeden skład, który jedzie w jedną stronę. Wersja, którą widzicie, jest oznaczona jako szkic z czwartego maja. Do startu malowania będą jeszcze iteracje.",
+
+  "Harmonogram. Dziesiąty i jedenasty czerwca to logistyka — przyjazdy, grunt, materiały. Dwunastego ruszamy z Etapem pierwszym i jedziemy do dziewiętnastego — to ten zielony pas, czyli właściwa Lokomotywa. Dziewiętnastego do dwudziestego pierwszego wchodzi Etap drugi — Train2Win Graffiti Jam, czyli kolejnych dwudziestu pięciu artystów, warsztaty i muzyka. Dolna linia, ta przerywana neonem, to dokumentacja wideo — kręcimy przez całe dziewięć dni, bez przerw. Dla Was to materiał, którego nie musicie produkować — dostajecie go z prawami do wykorzystania.",
+
+  "Zespół. Z tej strony mamy Jarka Fabisia, który prowadzi organizację i finanse, Mr.Maxa wspierającego logistykę, Rafała Raku — to nasza dyrekcja artystyczna i pionier polskiej sceny wielkoformatowej, oraz Fiksa odpowiedzialnego za Graffiti Jam. Po prawej szesnaście kart artystów Etapu pierwszego. Tu nazwiska, które dla rynku murali w Polsce coś znaczą — Bary, współautor muralu przy Piotrkowskiej w Łodzi, Biko z okręgu zielonogórskiego, plus pełna ekipa wielkoformatowców. Łączny zasięg ich Instagramów to około sto czterdzieści pięć tysięcy obserwujących. Uczciwie zaznaczam: nie gwarantujemy, że ktokolwiek z nich będzie indywidualnie promował Brilluxa na swoich kanałach. Ale wielu z nich wyraziło już zainteresowanie produktem ze względu na odporność na UV — to jest realny kanał testowy.",
+
+  "Program rozbity na dwa etapy. Z lewej Etap pierwszy — to jest Lokomotywa Tuwima, piętnastu zaproszonych artystów, dyrekcja Raku, kontrolowana paleta. Mamy dla nich hotel, wyżywienie i materiały, rozliczenie idzie umową o dzieło z gminą. Z prawej Etap drugi — Train2Win Graffiti Jam. Dwadzieścia pięć dodatkowych osób maluje w spójnej palecie, plus warsztaty Wyszło Jak Wyszło, plus muzyka — DJ.Jus z UK, DJ Wuber. Na koniec ścianę otwieramy dla społeczności na stałe — to znaczy, że żyje dalej, długo po tym, jak my się stąd zwiniemy.",
+
+  "Cztery konkretne rzeczy, które dostajecie. Pierwsza — logo na najlepszym kawałku ściany, w punkcie, z którego widzą Was wszystkie pociągi. Malujemy je jeszcze przed startem właściwego muralu, więc jest na ścianie przez całe dziewięć dni eventu i potem. Druga — pełne prawa do wykorzystania całego materiału foto i wideo, który produkuje gmina i nasz zespół. Trzecia — promocja w social mediach: kanały Jarka, Urzędu Miasta Zbąszynek i nowo powstające kanały Train2Win. Wszystko spina hasztag #ZbkTrain2win. Czwarta, dla mnie najciekawsza — dostęp do społeczności czterdziestu artystów, z których część już sama zgłosiła zainteresowanie Evocrylem. To nie jest deklaracja PR-owa, to organiczny kanał. Pakiet jest otwarty na rozmowę — to jest punkt wyjścia, nie zamknięta lista.",
+
+  "Konkret. Prosimy o sto czterdzieści litrów Brilluxa Evocryl 200. Wybór produktu nie jest przypadkowy — to artyści sami wskazali tę farbę ze względu na odporność na UV. Mural na otwartym betonie musi przeżyć lata, a my chcemy, żeby wyglądał wtedy tak samo jak po pierwszym tygodniu. Z prawej strony widzicie, co bierzemy na siebie — honoraria artystów, hotel, wyżywienie, grunt ściany, sprzęt, dokumentacja, DJ-e, warsztaty, cały program. Po stronie sponsora zostaje farba. To jest bardzo konkretny, dobrze zdefiniowany udział.",
+
+  "Skąd wiemy, że to się uda. Raku — pionier polskiej sceny malarstwa wielkoformatowego, prawdopodobnie znacie go z waszego rynku, jest naszą dyrekcją artystyczną. Bary — to jest człowiek, który współrobił mural przy Piotrkowskiej w Łodzi w 2002, jedno z największych przedsięwzięć muralowych w skali Europy. Biko — autorytet zielonogórski, miał wpływ na każdego artystę w promieniu stu kilometrów. To nie są początkujący — to ludzie, którzy ten rynek w Polsce zbudowali.",
+
+  "Wpływ w liczbach. Sto czterdzieści pięć tysięcy obserwujących to łączny zasięg artystów na Instagramie — pierwsze touchpointy. Czterysta pięćdziesiąt metrów ekspozycji stałej zostaje na ścianie. Czterdziestu artystów łącznie. Trzy linie pociągów dalekobieżnych przejeżdżające obok każdego dnia. Jeden film dokumentalny do dystrybucji, hasztag, otwarcie ściany dla społeczności na stałe. To jest projekt, który nie kończy się dwudziestego pierwszego czerwca — wtedy on dopiero zaczyna żyć.",
+
+  "Decyzja, o którą prosimy: czy Brillux wchodzi w to z nami z partią Evocryla 200. Termin, w którym to się musi domknąć — koniec maja, bo szóstego czerwca artyści zaczynają zjeżdżać. Z mojej strony to wszystko. Pytania? Otwierajmy."
+]
+</script>
+
+<script>
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  });
+</script>
+
+<script src="deck-stage.js"></script>
+<script src="image-slot.js"></script>
+
+<!-- TWEAKS -->
+<script>
+window.__TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "cover": "A"
+}/*EDITMODE-END*/;
+</script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const { useEffect } = React;
+
+function TrainTweaks() {
+  const t = useTweaks(window.__TWEAK_DEFAULTS);
+  useEffect(() => {
+    document.body.setAttribute('data-cover', t.cover || 'A');
+  }, [t.cover]);
+  return (
+    <TweaksPanel title="Tweaks · Train2Win">
+      <TweakSection title="Slajd tytułowy">
+        <TweakRadio
+          label="Układ"
+          value={t.cover}
+          onChange={v => t.set('cover', v)}
+          options={[
+            { value: 'A', label: 'Foto-bleed' },
+            { value: 'B', label: 'Plakat' },
+            { value: 'C', label: 'Split' },
+          ]}
+        />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+
+const root = document.createElement('div');
+document.body.appendChild(root);
+ReactDOM.createRoot(root).render(<TrainTweaks />);
+</script>
+
+</body>
+</html>
